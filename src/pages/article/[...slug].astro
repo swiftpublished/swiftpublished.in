@@ -1,16 +1,17 @@
 ---
+import BaseLayout from '@/layouts/BaseLayout'
+import FormattedDate from '@/components/FormattedDate'
+import Tag from '@/components/Tag'
+import Share from '@/components/Share'
 import { getCollection, render } from 'astro:content'
+import { articleSlug, readingTimeFor } from '@/utils/articles'
+import { activeSponsors } from '@/data/sponsors'
+import { tagName } from '@/data/tags'
 
 export async function getStaticPaths() {
-	const slugify = (s: string) =>
-		s
-			.toLowerCase()
-			.replace(/[^a-z0-9]+/g, '-')
-			.replace(/^-+|-+$/g, '')
-
 	const articles = await getCollection('articles')
 	return articles.map((article) => ({
-		params: { slug: slugify(article.data.properties.title) },
+		params: { slug: articleSlug(article) },
 		props: { article }
 	}))
 }
@@ -26,46 +27,83 @@ const heading = props['Article Title'] || props.title
 const description = props['Article Description']
 const metaTitle = props['Meta Title'] || heading
 const metaDescription = props['Meta Description'] || description
-const coverAlt = props['Cover Alternate text'] ?? ''
+const coverAlt = props['Cover Alternate text'] ?? heading
+const tags = props.Tags
+const pubDate = props['Created at']
+const readTime = readingTimeFor(article)
+const sponsor = activeSponsors()[0]
+const articleDate = pubDate.toISOString()
 ---
 
-<!doctype html>
-<html lang='en'>
-	<head>
-		<meta charset='utf-8' />
-		<meta name='viewport' content='width=device-width' />
-		<title>{metaTitle}</title>
-		<meta name='description' content={metaDescription} />
-	</head>
-	<body>
-		<main
-			style='max-width: 720px; margin: 2rem auto; padding: 0 1rem; font-family: system-ui, sans-serif; line-height: 1.6;'
-		>
-			<a href='/'>&larr; Back</a>
-			<article>
-				{
-					coverUrl && (
-						<img
-							src={coverUrl}
-							alt={coverAlt}
-							style='width: 100%; height: auto; margin: 1.5rem 0;'
-						/>
-					)
-				}
-				<h1>{heading}</h1>
-				<p style='color: #666; font-size: 1.1rem;'>{description}</p>
-				<div style='display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;'>
-					{
-						props.Tags.map((tag) => (
-							<span style='background: #eef; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;'>
-								{tag}
-							</span>
-						))
-					}
+<BaseLayout
+	title={metaTitle}
+	description={metaDescription}
+	image={coverUrl}
+	articleDate={articleDate}
+>
+	<article class='min-w-full md:py-4 sm:max-w-none md:max-w-none'>
+		<header class='mb-3 flex flex-col justify-center items-center gap-6'>
+			<div class='flex flex-col gap-2'>
+				<div class='flex items-center justify-center gap-x-2'>
+					<p class='text-center text-sm text-opacity-50'>
+						Published <FormattedDate date={pubDate} />
+					</p>
+					<span class='text-stone-400'>·</span>
+					<p class='text-center text-sm text-opacity-50 font-bold'>
+						{readTime}
+					</p>
 				</div>
-				<hr style='margin: 2rem 0;' />
-				<Content />
-			</article>
-		</main>
-	</body>
-</html>
+				<h1 class='text-center text-4xl md:text-6xl md:pb-2.5 font-semibold'>
+					{heading}
+				</h1>
+				<p class='text-center text-lg text-stone-600 dark:text-stone-300 max-w-2xl mx-auto'>
+					{description}
+				</p>
+			</div>
+
+			<div class='flex flex-wrap justify-center items-center gap-2 gap-y-4 md:gap-5'>
+				{tags.map((tag: string) => <Tag tag={tagName(tag)} />)}
+			</div>
+		</header>
+
+		{
+			coverUrl && (
+				<img
+					src={coverUrl}
+					alt={coverAlt}
+					loading='eager'
+					class='rounded-md w-full max-h-[300px] md:max-h-[500px] my-8 object-cover'
+				/>
+			)
+		}
+
+		<hr />
+
+		<div class='prose dark:prose-invert max-w-none mx-auto py-8'>
+			<Content />
+		</div>
+
+		{
+			sponsor && (
+				<aside class='not-prose mt-12 rounded-xl border border-stone-200 dark:border-stone-700 bg-stone-50 dark:bg-stone-900 p-6'>
+					<p class='text-xs uppercase tracking-wider text-stone-500 dark:text-stone-400 mb-2'>
+						Sponsor
+					</p>
+					<a href={sponsor.website} target='_blank' rel='noopener noreferrer' class='block group'>
+						<h3 class='text-xl font-semibold mb-2 group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors'>
+							{sponsor.name}
+						</h3>
+						<p class='text-stone-600 dark:text-stone-300'>{sponsor.description}</p>
+						<span class='inline-block mt-3 text-indigo-600 dark:text-indigo-400 font-medium'>
+							{sponsor.cta} →
+						</span>
+					</a>
+				</aside>
+			)
+		}
+
+		<div class='mt-12 pt-8 border-t border-stone-200 dark:border-stone-700'>
+			<Share />
+		</div>
+	</article>
+</BaseLayout>

@@ -1,0 +1,103 @@
+---
+import BaseLayout from '@/layouts/BaseLayout'
+import { AUTHORS } from '@/data/authors'
+
+export async function getStaticPaths() {
+	return AUTHORS.map((author) => ({
+		params: { id: author.id },
+		props: { author }
+	}))
+}
+
+const { author } = Astro.props
+---
+
+<BaseLayout
+	title={author.name}
+	description={`Know about our author — ${author.name}. ${author.bio[0]}`}
+>
+	<section class='flex flex-col md:flex-row gap-8 items-start py-8'>
+		<img
+			src={author.photo}
+			alt={author.photoAlt}
+			class='w-48 h-48 md:w-60 md:h-60 rounded-2xl object-cover flex-shrink-0'
+		/>
+		<div class='flex-1'>
+			<h1 class='text-4xl md:text-5xl font-bold'>{author.name}</h1>
+			<p class='text-stone-500 dark:text-stone-400 capitalize mt-2'>
+				{author.roles.join(' · ')} · {author.location}
+			</p>
+			<div class='flex gap-3 mt-4'>
+				{
+					author.links.linkedin && (
+						<a
+							href={author.links.linkedin}
+							target='_blank'
+							rel='noopener noreferrer'
+							class='text-sm text-indigo-600 dark:text-indigo-400 hover:underline'
+						>
+							LinkedIn
+						</a>
+					)
+				}
+				{
+					author.links.twitter && (
+						<a
+							href={author.links.twitter}
+							target='_blank'
+							rel='noopener noreferrer'
+							class='text-sm text-indigo-600 dark:text-indigo-400 hover:underline'
+						>
+							Twitter
+						</a>
+					)
+				}
+				{
+					author.links.github && (
+						<a
+							href={author.links.github}
+							target='_blank'
+							rel='noopener noreferrer'
+							class='text-sm text-indigo-600 dark:text-indigo-400 hover:underline'
+						>
+							GitHub
+						</a>
+					)
+				}
+				{
+					author.links.adplist && (
+						<a
+							href={author.links.adplist}
+							target='_blank'
+							rel='noopener noreferrer'
+							class='text-sm text-indigo-600 dark:text-indigo-400 hover:underline'
+						>
+							ADPList
+						</a>
+					)
+				}
+			</div>
+		</div>
+	</section>
+
+	<div class='prose dark:prose-invert max-w-none mt-2'>
+		{author.bio.map((p) => <p>{p}</p>)}
+
+		<blockquote>
+			<p>{author.quote.text}</p>
+			<p>— {author.quote.attribution}</p>
+		</blockquote>
+	</div>
+
+	<div class='mt-12 p-6 rounded-xl border border-stone-200 dark:border-stone-700'>
+		<p class='font-semibold'>Want to read more from our team?</p>
+		<p class='text-stone-600 dark:text-stone-300 mt-1'>Browse all articles or filter by topic.</p>
+		<div class='flex gap-3 mt-4'>
+			<a
+				href='/articles'
+				class='px-4 py-2 rounded-full text-sm font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors'
+				>All articles</a
+			>
+		</div>
+	</div>
+</BaseLayout>

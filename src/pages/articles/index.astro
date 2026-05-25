@@ -1,0 +1,37 @@
+---
+import BaseLayout from '@/layouts/BaseLayout'
+import ListArticles from '@/components/ListArticles'
+import TitlePage from '@/components/TitlePage'
+import { getArticles, getArticleTags } from '@/utils/articles'
+import { tagName } from '@/data/tags'
+
+const articles = await getArticles()
+const tags = await getArticleTags()
+---
+
+<BaseLayout
+	title='Articles'
+	description='All articles on Swift Published — Swift, SwiftUI and iOS development.'
+>
+	<TitlePage title='Articles' />
+
+	<div class='flex flex-wrap gap-2 mt-6'>
+		<a
+			href='/articles'
+			class='px-4 py-1.5 rounded-full text-sm font-semibold bg-indigo-600 text-white'
+			>All ({articles.length})</a
+		>
+		{
+			tags.map((tag) => (
+				<a
+					href={`/articles/${encodeURIComponent(tag.toLowerCase())}`}
+					class='px-4 py-1.5 rounded-full text-sm font-semibold bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors'
+				>
+					{tagName(tag)}
+				</a>
+			))
+		}
+	</div>
+
+	<ListArticles articles={articles} />
+</BaseLayout>

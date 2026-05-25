@@ -1,23 +1,75 @@
 ---
-import ListCategories from '@/components/ListCategories'
-import ListPosts from '@/components/ListPosts'
-import TitlePage from '@/components/TitlePage'
 import BaseLayout from '@/layouts/BaseLayout'
-import { getPosts } from '@/utils'
-import { siteConfig } from '@/site-config'
+import ListArticles from '@/components/ListArticles'
+import TitlePage from '@/components/TitlePage'
+import { getArticles } from '@/utils/articles'
+import { siteConfig } from '@/data/site.config'
+import events from '@/data/events.json'
 
-const MAX_POSTS = 5 // max number of posts to show on the home page
-const posts = await getPosts(MAX_POSTS)
+const articles = await getArticles(6)
+
+const trackLabels = {
+	ios: 'iOS',
+	android: 'Android',
+	ai: 'AI / ML'
+} as const
+
+type Track = keyof typeof trackLabels
+const tracks: Track[] = ['ios', 'android', 'ai']
 ---
 
-<BaseLayout title='Home'>
-	<TitlePage title={siteConfig.title} />
-	<ListCategories />
+<BaseLayout title='Home' description={siteConfig.description}>
+	<section class='flex flex-col gap-4 py-8'>
+		<TitlePage title={siteConfig.title} />
+		<p class='text-lg text-stone-600 dark:text-stone-300 max-w-3xl'>
+			{siteConfig.description}
+		</p>
+	</section>
 
-	<div>
-		<h2 class='text-lg font-medium tracking-wide text-end'>Latest Posts</h2>
-		<ListPosts FirstBig={true} posts={posts} />
-	</div>
+	<section>
+		<div class='flex items-center justify-between mb-3'>
+			<h2 class='text-2xl font-bold'>Latest Articles</h2>
+			<a href='/articles' class='text-indigo-600 dark:text-indigo-400 font-medium hover:underline'>
+				View all →
+			</a>
+		</div>
+		<ListArticles FirstBig={true} articles={articles} />
+	</section>
+
+	<section class='mt-16'>
+		<div class='mb-6'>
+			<h2 class='text-2xl font-bold'>Upcoming Conferences</h2>
+			<p class='text-stone-600 dark:text-stone-300 mt-1'>
+				iOS, Android, and AI events worth checking out.
+			</p>
+		</div>
+
+		<div class='grid grid-cols-1 md:grid-cols-3 gap-6'>
+			{
+				tracks.map((track) => (
+					<div class='rounded-lg border border-stone-200 dark:border-stone-700 p-6'>
+						<h3 class='text-sm font-semibold mb-4 uppercase tracking-wider text-stone-500 dark:text-stone-400'>
+							{trackLabels[track]}
+						</h3>
+						<ul class='flex flex-col gap-4'>
+							{events[track].map((event) => (
+								<li>
+									<a href={event.url} target='_blank' rel='noopener noreferrer' class='block group'>
+										<p class='font-semibold group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors'>
+											{event.name}
+										</p>
+										<p class='text-sm text-stone-600 dark:text-stone-300 mt-1'>
+											{event.date} · {event.location}
+										</p>
+									</a>
+								</li>
+							))}
+						</ul>
+					</div>
+				))
+			}
+		</div>
+	</section>
 </BaseLayout>
 
 <script>
@@ -30,9 +82,7 @@ const posts = await getPosts(MAX_POSTS)
 			{ y: [80, 0], opacity: [0, 1] },
 			{
 				duration: 2.5,
-				opacity: { duration: 3 },
-
-				offset: [0, 0.55, 0.75]
+				opacity: { duration: 3 }
 			}
 		)
 	}

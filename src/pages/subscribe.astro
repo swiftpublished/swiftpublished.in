@@ -1,0 +1,44 @@
+---
+import BaseLayout from '@/layouts/BaseLayout'
+import TitlePage from '@/components/TitlePage'
+import { SOCIALNETWORKS } from '@/data/links'
+---
+
+<BaseLayout
+	title='Subscribe'
+	description='Stay updated with the latest Swift and iOS development articles via RSS or social media.'
+>
+	<TitlePage title='Subscribe' />
+
+	<div class='prose dark:prose-invert max-w-none mt-8'>
+		<p>Stay updated with the latest Swift and iOS development articles, tutorials, and news.</p>
+
+		<h2>RSS Feed</h2>
+		<p>Subscribe to our RSS feed to get updates in your favorite RSS reader.</p>
+		<p>
+			<a href='/rss.xml'>
+				<strong>https://swiftpublished.in/rss.xml</strong>
+			</a>
+		</p>
+
+		<h2>Social Media</h2>
+		<p>Follow us on social media for updates, discussions, and community engagement:</p>
+		<ul>
+			{
+				SOCIALNETWORKS.map((s) => (
+					<li>
+						<a href={s.url} target='_blank' rel='noopener noreferrer'>
+							{s.name}
+						</a>
+					</li>
+				))
+			}
+		</ul>
+
+		<h2>Get in Touch</h2>
+		<p>
+			Love our content? Contribute, suggest, or just say hi at{' '}
+			<a href='mailto:hello@swiftpublished.in'>hello@swiftpublished.in</a>.
+		</p>
+	</div>
+</BaseLayout>

@@ -1,0 +1,91 @@
+---
+import BaseLayout from '@/layouts/BaseLayout'
+import TitlePage from '@/components/TitlePage'
+import { AUTHORS } from '@/data/authors'
+---
+
+<BaseLayout
+	title='About'
+	description='Meet the team behind Swift Published, the philosophy behind it, and how to reach us.'
+>
+	<TitlePage title='About Us' />
+
+	<div class='prose dark:prose-invert max-w-none mt-8'>
+		<h2>The Team</h2>
+		<p>
+			We are a small team from India with an ambitious effort to write weekly blogs related to Swift
+			&amp; iOS Development keeping beginners in mind. After more than a decade of experience in the
+			field, we think it's time to contribute back to the community.
+		</p>
+	</div>
+
+	<div class='grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 not-prose'>
+		{
+			AUTHORS.map((author) => (
+				<a
+					href={`/authors/${author.id}`}
+					class='flex gap-4 items-center p-4 rounded-lg border border-stone-200 dark:border-stone-700 hover:bg-stone-50 dark:hover:bg-stone-900 transition-colors'
+				>
+					<img
+						src={author.photo}
+						alt={author.photoAlt}
+						class='w-16 h-16 rounded-full object-cover flex-shrink-0'
+					/>
+					<div>
+						<p class='font-semibold'>{author.name}</p>
+						<p class='text-sm text-stone-600 dark:text-stone-300'>{author.location}</p>
+						<p class='text-xs text-stone-500 dark:text-stone-400 capitalize mt-1'>
+							{author.roles.join(' · ')}
+						</p>
+					</div>
+				</a>
+			))
+		}
+	</div>
+
+	<div class='prose dark:prose-invert max-w-none mt-12'>
+		<h2>The Site</h2>
+		<p>
+			<a href='https://swiftpublished.in'>swiftpublished.in</a> is built on a modern static-first web
+			stack — fast, free, and ad-free.
+		</p>
+
+		<h3>Tech stack</h3>
+		<ul>
+			<li>
+				<a href='https://astro.build'>Astro</a> for content-first static site generation
+			</li>
+			<li>
+				<a href='https://www.notion.so/'>Notion</a> as the CMS, pulled at build time via{' '}
+				<a href='https://github.com/NotWoods/notion-astro-loader'> notion-astro-loader</a>
+			</li>
+			<li><a href='https://tailwindcss.com'>TailwindCSS</a> for styling</li>
+			<li><a href='https://shiki.style'>Shiki</a> for code syntax highlighting</li>
+			<li><a href='https://vercel.com'>Vercel</a> for hosting and CI</li>
+		</ul>
+
+		<h3>User-First</h3>
+		<p>
+			We believe learning should be free, free of ads. So the entire content on{' '}
+			<a href='https://swiftpublished.in'>swiftpublished.in</a> is free for everyone without any ads.
+		</p>
+		<p>
+			User privacy is taken seriously — no login, minimal tracking, and TLS by default. The site is
+			statically generated and blazing fast.
+		</p>
+		<p>
+			We tend to write articles from the experience &amp; learning at our work. For deeper or
+			advanced topics, follow{' '}
+			<a href='https://www.kodeco.com'>kodeco.com</a>,{' '}
+			<a href='https://www.hackingwithswift.com'>hackingwithswift.com</a>,{' '}
+			<a href='https://swiftbysundell.com'>swiftbysundell.com</a>, and{' '}
+			<a href='https://fivestars.blog'>fivestars.blog</a>.
+		</p>
+
+		<h2>Say Hi!</h2>
+		<p>
+			If you want to write with us, have feedback, or just want to say hi, reach us at{' '}
+			<a href='mailto:hello@swiftpublished.in'>hello@swiftpublished.in</a>.
+		</p>
+	</div>
+</BaseLayout>

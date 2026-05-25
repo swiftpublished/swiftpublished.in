@@ -1,0 +1,71 @@
+{
+	"ios": [
+		{
+			"name": "iOS Conf SG 2026",
+			"date": "Jan 21–23, 2026",
+			"location": "Singapore",
+			"url": "https://iosconf.sg",
+			"description": "Southeast Asia's leading iOS developer conference."
+		},
+		{
+			"name": "Arctic Conference 2026",
+			"date": "Feb 10–12, 2026",
+			"location": "Oulu, Finland",
+			"url": "https://arcticonference.com",
+			"description": "The northernmost iOS conference in the world."
+		},
+		{
+			"name": "AppDevCon 2026",
+			"date": "Mar 10–13, 2026",
+			"location": "Amsterdam, Netherlands",
+			"url": "https://appdevcon.nl",
+			"description": "Leading mobile development conference in Europe."
+		}
+	],
+	"android": [
+		{
+			"name": "droidcon Abu Dhabi 2025",
+			"date": "Dec 13, 2025",
+			"location": "Abu Dhabi, UAE",
+			"url": "https://www.droidcon.com/abudhabi",
+			"description": "Premier Android conference in the Middle East."
+		},
+		{
+			"name": "AppDevCon 2026",
+			"date": "Mar 10–13, 2026",
+			"location": "Amsterdam, Netherlands",
+			"url": "https://appdevcon.nl",
+			"description": "Leading mobile development conference in Europe."
+		},
+		{
+			"name": "Android Makers 2026",
+			"date": "Apr 9, 2026",
+			"location": "Paris, France",
+			"url": "https://androidmakers.fr",
+			"description": "Bringing the Android community together."
+		}
+	],
+	"ai": [
+		{
+			"name": "NeurIPS 2025",
+			"date": "Dec 8–14, 2025",
+			"location": "Vancouver, Canada",
+			"url": "https://neurips.cc",
+			"description": "Leading AI and machine learning research conference."
+		},
+		{
+			"name": "AAAI 2026",
+			"date": "Feb 22–27, 2026",
+			"location": "Vancouver, Canada",
+			"url": "https://aaai.org",
+			"description": "Conference on Artificial Intelligence."
+		},
+		{
+			"name": "NVIDIA GTC 2026",
+			"date": "Mar 16–19, 2026",
+			"location": "San Jose, California",
+			"url": "https://www.nvidia.com/gtc",
+			"description": "GPU Technology Conference for AI and deep learning."
+		}
+	]
+}

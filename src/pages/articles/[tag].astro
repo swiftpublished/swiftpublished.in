@@ -1,0 +1,36 @@
+---
+import BaseLayout from '@/layouts/BaseLayout'
+import ListArticles from '@/components/ListArticles'
+import TitlePage from '@/components/TitlePage'
+import { getArticles, getArticleTags } from '@/utils/articles'
+import { tagName } from '@/data/tags'
+
+export async function getStaticPaths() {
+	const tags = await getArticleTags()
+	const articles = await getArticles()
+
+	return tags.map((tag) => {
+		const filtered = articles.filter((a) => a.data.properties.Tags.includes(tag))
+		return {
+			params: { tag: tag.toLowerCase() },
+			props: { tag, articles: filtered }
+		}
+	})
+}
+
+const { tag, articles } = Astro.props
+const displayName = tagName(tag)
+---
+
+<BaseLayout
+	title={`${displayName} articles`}
+	description={`All articles tagged ${displayName} on Swift Published.`}
+>
+	<TitlePage title={`${displayName} (${articles.length})`} />
+
+	<p class='mt-2 text-stone-600 dark:text-stone-300'>
+		<a href='/articles' class='hover:underline'>← All articles</a>
+	</p>
+
+	<ListArticles articles={articles} />
+</BaseLayout>

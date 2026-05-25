@@ -2,7 +2,6 @@ import { defineConfig } from 'astro/config'
 import mdx from '@astrojs/mdx'
 import sitemap from '@astrojs/sitemap'
 import tailwind from '@astrojs/tailwind'
-import { remarkReadingTime } from './src/utils/readTime.ts'
 import { siteConfig } from './src/data/site.config'
 
 // https://astro.build/config
@@ -11,11 +10,12 @@ export default defineConfig({
 	image: {
 		remotePatterns: [
 			{ protocol: 'https', hostname: 'res.cloudinary.com' },
-			{ protocol: 'https', hostname: '**.amazonaws.com' }
+			{ protocol: 'https', hostname: '**.amazonaws.com' },
+			{ protocol: 'https', hostname: 'swiftpublished.com' },
+			{ protocol: 'https', hostname: 'miro.medium.com' }
 		]
 	},
 	markdown: {
-		remarkPlugins: [remarkReadingTime],
 		drafts: true,
 		shikiConfig: {
 			theme: 'material-theme-palenight',

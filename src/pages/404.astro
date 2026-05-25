@@ -1,0 +1,29 @@
+---
+import BaseLayout from '@/layouts/BaseLayout'
+---
+
+<BaseLayout
+	title='Page not found'
+	description='The page you are looking for does not exist on Swift Published.'
+>
+	<section class='flex flex-col items-center justify-center text-center gap-6 py-24'>
+		<p class='text-7xl md:text-9xl font-bold text-stone-300 dark:text-stone-700'>404</p>
+		<h1 class='text-3xl md:text-4xl font-semibold'>Page not found</h1>
+		<p class='text-stone-600 dark:text-stone-300 max-w-md'>
+			The page you are looking for doesn't exist or has moved. Browse our latest articles, or head
+			back to the home page.
+		</p>
+		<div class='flex gap-3'>
+			<a
+				href='/'
+				class='px-5 py-2 rounded-full font-semibold bg-indigo-600 text-white hover:bg-indigo-700 transition-colors'
+				>Home</a
+			>
+			<a
+				href='/articles'
+				class='px-5 py-2 rounded-full font-semibold bg-stone-200 dark:bg-stone-800 text-stone-700 dark:text-stone-200 hover:bg-stone-300 dark:hover:bg-stone-700 transition-colors'
+				>Browse articles</a
+			>
+		</div>
+	</section>
+</BaseLayout>
