@@ -8,6 +8,12 @@ import { siteConfig } from './src/data/site.config'
 // https://astro.build/config
 export default defineConfig({
 	site: siteConfig.site,
+	image: {
+		remotePatterns: [
+			{ protocol: 'https', hostname: 'res.cloudinary.com' },
+			{ protocol: 'https', hostname: '**.amazonaws.com' }
+		]
+	},
 	markdown: {
 		remarkPlugins: [remarkReadingTime],
 		drafts: true,

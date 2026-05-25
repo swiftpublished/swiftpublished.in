@@ -1,0 +1,71 @@
+---
+import { getCollection, render } from 'astro:content'
+
+export async function getStaticPaths() {
+	const slugify = (s: string) =>
+		s
+			.toLowerCase()
+			.replace(/[^a-z0-9]+/g, '-')
+			.replace(/^-+|-+$/g, '')
+
+	const articles = await getCollection('articles')
+	return articles.map((article) => ({
+		params: { slug: slugify(article.data.properties.title) },
+		props: { article }
+	}))
+}
+
+const { article } = Astro.props
+const { Content } = await render(article)
+
+const props = article.data.properties
+const cover = article.data.cover
+const coverUrl =
+	cover?.type === 'external' ? cover.external.url : cover?.type === 'file' ? cover.file.url : null
+const heading = props['Article Title'] || props.title
+const description = props['Article Description']
+const metaTitle = props['Meta Title'] || heading
+const metaDescription = props['Meta Description'] || description
+const coverAlt = props['Cover Alternate text'] ?? ''
+---
+
+<!doctype html>
+<html lang='en'>
+	<head>
+		<meta charset='utf-8' />
+		<meta name='viewport' content='width=device-width' />
+		<title>{metaTitle}</title>
+		<meta name='description' content={metaDescription} />
+	</head>
+	<body>
+		<main
+			style='max-width: 720px; margin: 2rem auto; padding: 0 1rem; font-family: system-ui, sans-serif; line-height: 1.6;'
+		>
+			<a href='/'>&larr; Back</a>
+			<article>
+				{
+					coverUrl && (
+						<img
+							src={coverUrl}
+							alt={coverAlt}
+							style='width: 100%; height: auto; margin: 1.5rem 0;'
+						/>
+					)
+				}
+				<h1>{heading}</h1>
+				<p style='color: #666; font-size: 1.1rem;'>{description}</p>
+				<div style='display: flex; gap: 0.5rem; flex-wrap: wrap; margin: 1rem 0;'>
+					{
+						props.Tags.map((tag) => (
+							<span style='background: #eef; padding: 0.25rem 0.5rem; border-radius: 0.25rem; font-size: 0.875rem;'>
+								{tag}
+							</span>
+						))
+					}
+				</div>
+				<hr style='margin: 2rem 0;' />
+				<Content />
+			</article>
+		</main>
+	</body>
+</html>
