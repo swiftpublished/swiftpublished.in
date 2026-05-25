@@ -1,24 +1,32 @@
 {
-	"name": "blog-template",
+	"name": "swiftpublished-in",
 	"type": "module",
-	"version": "1.1.0",
-	"description": "A template for creating a blog with Astro",
-	"author": "danielcgilibert",
+	"version": "0.1.0",
+	"description": "swiftpublished.in — the iOS development article site.",
+	"author": "Murali Kathir",
+	"contributors": [
+		"Murali Kathir",
+		"Saba",
+		"Shahrukh Alam",
+		"Arrjun Baru",
+		"Aaina Jain"
+	],
 	"license": "GPL-3.0-only",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/danielcgilibert/blog-template"
+		"url": "https://github.com/swiftpublished/swiftpublished.in"
 	},
 	"keywords": [
 		"astro",
-		"astrojs",
-		"astro-template",
-		"astro-blog",
-		"astro-b"
+		"blog",
+		"ios",
+		"swift",
+		"swiftpublished"
 	],
 	"bugs": {
-		"url": "https://github.com/danielcgilibert/blog-template/issues"
+		"url": "https://github.com/swiftpublished/swiftpublished.in/issues"
 	},
+	"_attribution": "Scaffolded from OpenBlog by danielcgilibert (https://github.com/danielcgilibert/blog-template, GPL-3.0). See LICENSE.",
 	"scripts": {
 		"dev": "npx tinacms dev -c \"astro dev\"",
 		"start": "astro dev",
