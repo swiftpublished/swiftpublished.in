@@ -67,6 +67,17 @@ import { AstroFont } from 'astro-font'
 <!-- RSS auto-discovery -->
 <link rel='alternate' type='application/rss+xml' title={siteConfig.title} href='/rss.xml' />
 
+<!-- Google Analytics 4 -->
+<script is:inline async src='https://www.googletagmanager.com/gtag/js?id=G-W3QJHFYGBD'></script>
+<script is:inline>
+	window.dataLayer = window.dataLayer || []
+	function gtag() {
+		dataLayer.push(arguments)
+	}
+	gtag('js', new Date())
+	gtag('config', 'G-W3QJHFYGBD')
+</script>
+
 <AstroFont
 	config={[
 		{
