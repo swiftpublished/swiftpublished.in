@@ -10,9 +10,7 @@ export default defineConfig({
 	image: {
 		remotePatterns: [
 			{ protocol: 'https', hostname: 'res.cloudinary.com' },
-			{ protocol: 'https', hostname: '**.amazonaws.com' },
-			{ protocol: 'https', hostname: 'swiftpublished.com' },
-			{ protocol: 'https', hostname: 'miro.medium.com' }
+			{ protocol: 'https', hostname: '**.amazonaws.com' }
 		]
 	},
 	markdown: {

@@ -6,9 +6,10 @@ import type { Article } from '@/utils/articles'
 interface Props {
 	articles: Article[]
 	FirstBig?: boolean
+	eagerCount?: number
 }
 
-const { articles, FirstBig = false } = Astro.props
+const { articles, FirstBig = false, eagerCount = 0 } = Astro.props
 ---
 
 <section
@@ -17,5 +18,5 @@ const { articles, FirstBig = false } = Astro.props
 		FirstBig && `md:[&>*:first-child]:col-span-2`
 	)}
 >
-	{articles.map((article) => <ArticleCard article={article} />)}
+	{articles.map((article, i) => <ArticleCard article={article} eager={i < eagerCount} />)}
 </section>
